@@ -1,0 +1,7 @@
+html, body {
+  height: 100%;
+}
+#progressChart {
+  border: 1px solid gold;
+  height: 80%;
+}
