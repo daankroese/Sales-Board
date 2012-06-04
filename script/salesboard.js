@@ -1,93 +1,93 @@
 // Initialize global variables
-var sData           = '';
-var oData           = {};
-var container       = "#data";
-var chart;
 var updateTimer;
-var chartData;
-var chartDataHeader = [["Name", "Sales Calls", "Meetings", "New Customers", "Renewals", "Services", "Tools", "Total sales"]];
-var summable        = ["Renewals", "Services", "Tools"];
-var chartOptions    = {
-  animation: {duration: 1000, easing: 'out'},
-  chartArea: {left: 50, top: 50, width: "80%", height: "80%"},
-  vAxis:     {baseline: 0, minValue: 0, maxValue: 1, format: "#%"}
-}
+var lastDataTimestamp = 0;
 
-// Load the Visualization API
-google.load('visualization', '1.0', {'packages':['corechart']});
-
-// Load first data when the Google Visualization API is loaded.
-google.setOnLoadCallback(loadData);
-
-function loadData()
-{
-  $.getJSON('data.json', initialize);
-}
-
-function initialize(data)
-{
-  // Initialize Google chart
-  chart = new google.visualization.ColumnChart(document.getElementById('progressChart'));
-
-  // Manipulate data and draw chart
-  sData = JSON.stringify(data);
-  transformData(data);
-  drawChart();
-
+$(document).ready(function (){
+  // Load data table when page loads
+  loadData(true);
   // Set periodical updating
-  updateTimer = setInterval(function() { $.getJSON('data.json', updateView); }, 1000);
+  updateTimer = setInterval("loadData()", 2000);
+});
+
+// Load data into container (if there is new data)
+function loadData(first)
+{
+  var timestamp = (first === true) ? 0 : lastDataTimestamp;
+  $.post('data.php', {"action":"get", "timestamp":timestamp}, dataLoaded);
 }
 
-function transformData(data)
+// Handle the new data (if any) on a successful load
+function dataLoaded(data)
 {
-  // Initialize new data set
-  chartData = chartDataHeader.slice();
+  // Parse JSON (if needed)
+  data = ($.parseJSON(data)) ? $.parseJSON(data) : data;
 
-  // Add sales persons to data array for chart
-  var salesPerson = [];
-  var summables = [0,0];
-  $.each(data, function(salesPersonName, values) {
-    salesPerson = [];
-    summables = [0,0];
-
-    // Sales person name
-    salesPerson.push(salesPersonName);
-
-    // Sales person status
-    $.each(values, function(objective, status){
-      salesPerson.push(status.status / status.target);
-      if ($.inArray(objective, summable) > -1)
-      {
-        summables[0] += status.status;
-        summables[1] += status.target;
-      }
-    });
-    salesPerson.push(summables[0]/summables[1]);
-
-    // Add sales person to array
-    chartData.push(salesPerson);
-  });
-
-  // Transform chartData into data table
-  chartData = google.visualization.arrayToDataTable(chartData);
-}
-
-function drawChart()
-{
-  chart.draw(chartData, chartOptions);
-}
-
-function updateView(data)
-{
-  // Has the data changed since the last update?
-  sDataNew = JSON.stringify(data);
-  if (sDataNew == sData)
+  if (data.status == 'success')
   {
-    return false;
+    // Update data timestamp
+    lastDataTimestamp = data.filetime;
+  
+    // Put data into container
+    $('#progressTableContainer').html(data.data);
+  
+    // Make table cells turn into input fields on click
+    var cells = $('#progressTableContainer').find('td.value');
+    cells.on('click', switchCellToInput);
   }
+  else if (data.status == 'unchanged')
+  {
+  
+  }
+  else if (data.status == 'error')
+  {
+  
+  }
+}
 
-  sData = sDataNew;
+// Switch one cell to an input field
+function switchCellToInput(event)
+{
+  var cell = $(this);
 
-  transformData(data);
-  drawChart();
+  if (cell.find('input').length == 0)
+  {
+    // Get current cel value and turn it into an input field
+    var value = parseInt(cell.html(), 10);
+    var width = cell.width();
+    cell.html('<input type="text" value="' + value + '" />');
+    var input = cell.find('input');
+    input.width(width - 4);
+    cell.width(width);
+
+    // Add handler to save data
+    input.on('blur keypress', saveData);
+
+    input.select();
+  }
+}
+
+// Save changed data
+function saveData(event)
+{
+  if (typeof event.keyCode == 'undefined' || event.keyCode == 13)
+  {
+    // Send new data to data handler
+    //console.log(this, event);
+    var input = $(this);
+    var value = parseInt(input.val(), 10);
+    var id = input.parent().attr('id').split('-');
+    $.post('data.php', {"action":"set", "data":{"id":id, "value":value}}, dataSaved);
+
+    // Update view back to normal
+    input.parent().html(value);
+  }
+}
+
+// Handle return value from data saving attempt
+function dataSaved (data)
+{
+  if (data.status == 'success')
+  {
+    loadData();
+  }
 }

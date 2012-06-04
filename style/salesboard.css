@@ -1,7 +1,63 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-size: 20px;
+  line-height: 1em;
+  font-family: "Calibri", sans-serif;
+}
 html, body {
   height: 100%;
 }
-#progressChart {
-  border: 1px solid gold;
+
+h1 {
+  margin: .5em;
+  font-size: 2em;
+}
+
+#progressTableContainer {
   height: 80%;
+  margin: 1em;
+  border: 1px solid #21b4e2;
+}
+
+table, tr, td {
+  border: 1px solid #21b4e2;
+  border-collapse: collapse;
+  text-align: right;
+}
+table {
+  width: 100%;
+  height: 100%;
+}
+td {
+  padding: 10px;
+}
+td.value {
+  cursor: pointer;
+}
+.salesPersonName {
+  text-align: center;
+}
+.tableHeader,
+.tableTotals {
+  font-size: 1.5em;
+  color: #000;
+
+  background: #b7deed; /* Old browsers */
+  background: -moz-linear-gradient(top,  #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b7deed), color-stop(50%,#71ceef), color-stop(51%,#21b4e2), color-stop(100%,#b7deed)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* IE10+ */
+  background: linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed',GradientType=0 ); /* IE6-9 */
+}
+span.target, span.status {
+  display: inline-block;
+  width: 50%;
+}
+
+input {
+  border: 2px solid #21b4e2;
+  text-align: right;
 }
