@@ -29,6 +29,10 @@ function dataLoaded(data)
   {
     // Update data timestamp
     lastDataTimestamp = data.filetime;
+
+    // Show when the data was last updated
+    $('#lastCheck').html(data.datestamp);
+    $('#lastChange').html(data.datestamp);
   
     // Put data into container
     $('#progressTableContainer').html(data.data);
@@ -39,7 +43,7 @@ function dataLoaded(data)
   }
   else if (data.status == 'unchanged')
   {
-  
+    $('#lastCheck').html(data.datestamp );
   }
   else if (data.status == 'error')
   {

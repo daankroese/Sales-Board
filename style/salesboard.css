@@ -24,7 +24,7 @@ h1 {
 
 #progressTableContainer {
   height: 80%;
-  margin: 1em;
+  margin: 1em 1em 0 1em;
   border: 1px solid #499bea;
 }
 
@@ -62,6 +62,16 @@ td.value {
 span.target, span.status {
   display: inline-block;
   width: 50%;
+}
+
+#lastUpdate {
+  float: right;
+  margin: 5px 2em;
+  padding: 0px;
+  font-size: .5em;
+}
+#lastUpdate span {
+  font-size: 10px;
 }
 
 input {

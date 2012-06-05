@@ -13,7 +13,7 @@ switch ($action)
   case 'get':
     if (!$handler->checkFileChanged($timestamp))
     {
-      echo json_encode(array('status' => 'unchanged'));
+      echo json_encode(array('status' => 'unchanged', 'datestamp' => date("Y-m-d H:i:s")));
     }
     else
     {
@@ -198,7 +198,7 @@ class Data {
 
       // Return html
       $html .= "</table>\n";
-      return json_encode(array('status' => 'success', 'filetime' => $this->fileModTime, 'data' => $html));
+      return json_encode(array('status' => 'success', 'filetime' => $this->fileModTime, 'datestamp' => date("Y-m-d H:i:s"), 'data' => $html));
     }
     else
     {
@@ -238,7 +238,7 @@ class Data {
       @ $this->fileModTime = filemtime($this->filename);
       if ($success)
       {
-        return json_encode(array('status' => 'success', 'filetime' => $this->fileModTime, 'data' => 'New csv data saved to file ' . $this->filename));
+        return json_encode(array('status' => 'success', 'filetime' => $this->fileModTime, 'datestamp' => date("Y-m-d H:i:s"), 'data' => 'New csv data saved to file ' . $this->filename));
       }
       else
       {
