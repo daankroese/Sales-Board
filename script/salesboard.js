@@ -1,6 +1,7 @@
 // Initialize global variables
 var updateTimer;
 var lastDataTimestamp = 0;
+var oldCellValue;
 
 $(document).ready(function (){
   // Load data table when page loads
@@ -20,7 +21,7 @@ function loadData(first)
 function dataLoaded(data)
 {
   // Clear error box if needed
-  $('#errorBox').html('&nbsp;');
+  //$('#errorBox').html('&nbsp;');
 
   // Parse JSON (if needed)
   data = ($.parseJSON(data)) ? $.parseJSON(data) : data;
@@ -47,11 +48,11 @@ function dataLoaded(data)
   }
   else if (data.status == 'error')
   {
-    $('#errorBox').html(data.data);
+    message('error', data.data);
   }
   else
   {
-    $('#errorBox').html('An unknown error occurred');
+    message('error', 'An unknown error occurred');
   }
 }
 
@@ -63,9 +64,9 @@ function switchCellToInput(event)
   if (cell.find('input').length == 0)
   {
     // Get current cel value and turn it into an input field
-    var value = parseInt(cell.html(), 10);
+    oldCellValue = parseInt(cell.html(), 10);
     var width = cell.width();
-    cell.html('<input type="text" value="' + value + '" />');
+    cell.html('<input type="text" value="' + oldCellValue + '" />');
     var input = cell.find('input');
     input.width(width - 4);
     cell.width(width);
@@ -87,11 +88,16 @@ function saveData(event)
     var input = $(this);
     var value = parseInt(input.val(), 10);
 
-    // If data is valid number, send it to the data handler
-    if (!isNaN(value))
+    // If data is valid number AND not the number it was before, send it to the data handler
+    if (!isNaN(value) && value != oldCellValue)
     {
       var id = input.parent().attr('id').split('-');
       $.post('data.php', {"action":"set", "data":{"id":id, "value":value}}, dataSaved);
+    }
+    else
+    {
+      value = oldCellValue;
+      message('error', 'Invalid input');
     }
 
     // Update view back to normal
@@ -104,14 +110,47 @@ function dataSaved (data)
 {
   if (data.status == 'success')
   {
+    message('success', data.data);
     loadData();
   }
   else if (data.status == 'error')
   {
-    $('#errorBox').html(data.data);
+    message('errors', data.data);
   }
   else
   {
-    $('#errorBox').html('An unknown error occurred');
+    message('error', 'An unknown error occurred');
+  }
+}
+
+function message(type, message)
+{
+  // For new messages: Fade out current message, change content, show new message , wait, fade out message
+  // For repeated messages: Flash existing message
+  if (type == 'error')
+  {
+    if ($('#errorBox').html() == message)
+    {
+      $('#errorBox').clearQueue().fadeOut(0).delay(200).fadeIn(0).delay(2000).fadeOut(1000);
+    }
+    else
+    {
+      $('#errorBox').fadeOut(1000).queue(function(){$(this).html(message);$(this).dequeue();}).fadeIn(0).delay(2000).fadeOut(1000);
+    }
+  }
+  else if (type == 'success')
+  {
+    if ($('#successBox').html() == message)
+    {
+      $('#successBox').clearQueue().fadeOut(0).delay(200).fadeIn(0).delay(2000).fadeOut(1000);
+    }
+    else
+    {
+      $('#successBox').fadeOut(1000).queue(function(){$(this).html(message);$(this).dequeue();}).fadeIn(0).delay(2000).fadeOut(1000);
+    }
+  }
+  else
+  {
+    message('error', 'Invalid message type');
   }
 }
