@@ -144,7 +144,7 @@ class Data {
       {
         $html .= "    <td colspan=\"2\" class=\"columnHeader\">" . $data[$i][0] . "</td>\n";
       }
-      $html .= "    <td colspan=\"2\" class=\"columnHeader\">Total</td>\n  </tr>\n  <tr>\n    <td></td>\n";
+      $html .= "    <td colspan=\"2\" class=\"columnHeader\">Total</td>\n  </tr>\n  <tr class=\"tableSubHeader\">\n    <td></td>\n";
       for ($i = 0; $i <= count($data); $i++)
       {
         $html .= "    <td>target</td><td>status</td>\n";
@@ -154,13 +154,15 @@ class Data {
       // Create row for each sales type
       for ($i = 1; $i < count($header); $i++)
       {
+        $cellClass = ($i > 3) ? 'summable' : 'nonSummable';
+
         $html .= "  <tr>\n"
-               . "    <td>" . $header[$i] . "</td>\n";
+               . "    <td class=\"$cellClass\">" . $header[$i] . "</td>\n";
         for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
         {
           $data[$salesPerson][$i] = explode(';', $data[$salesPerson][$i]);
-          $html .= "    <td class=\"value target\" id=\"dataCell-$salesPerson-$i-target\">" . $data[$salesPerson][$i][0] . "</td>\n"
-                 . "    <td class=\"value status\" id=\"dataCell-$salesPerson-$i-status\">" . $data[$salesPerson][$i][1] . "</td>\n";
+          $html .= "    <td class=\"value target $cellClass\" id=\"dataCell-$salesPerson-$i-target\">" . $data[$salesPerson][$i][0] . "</td>\n"
+                 . "    <td class=\"value status $cellClass\" id=\"dataCell-$salesPerson-$i-status\">" . $data[$salesPerson][$i][1] . "</td>\n";
 
           // Add data to grand total
           $grandTotals[$i][0] = (isset($grandTotals[$i][0])) ? $grandTotals[$i][0] + $data[$salesPerson][$i][0] : $data[$salesPerson][$i][0];
@@ -180,8 +182,8 @@ class Data {
         }
 
         // Add cells to totals column
-        $html .= "    <td>" . $grandTotals[$i][0] . "</td>"
-               . "    <td>" . $grandTotals[$i][1] . "</td>";
+        $html .= "    <td class=\"$cellClass\">" . $grandTotals[$i][0] . "</td>"
+               . "    <td class=\"$cellClass emphasis\">" . $grandTotals[$i][1] . "</td>";
 
         $html .= "  </tr>\n";
       }
@@ -191,10 +193,10 @@ class Data {
              . "    <td>Total sales</td>\n";
       for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
       {
-        $html .= "    <td class=\"target\">" . $totals[$salesPerson][0] . "</td><td class=\"status\">" . $totals[$salesPerson][1] . "</td>\n";
+        $html .= "    <td class=\"target\">" . $totals[$salesPerson][0] . "</td><td class=\"status emphasis\">" . $totals[$salesPerson][1] . "</td>\n";
       }
       $html .= "    <td>" . $grandTotals['grandTotal'][0] . "</td>"
-             . "    <td>" . $grandTotals['grandTotal'][1] . "</td>"
+             . "    <td class=\"emphasis\">" . $grandTotals['grandTotal'][1] . "</td>"
              . "  </tr>\n";
 
       // Return html
