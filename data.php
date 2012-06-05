@@ -199,7 +199,7 @@ class Data {
 
       // Return html
       $html .= "</table>\n";
-      return json_encode(array('status' => 'success', 'filetime' => $this->fileModTime, 'datestamp' => date("Y-m-d H:i:s"), 'data' => $html));
+      return json_encode(array('status' => 'success', 'filetime' => $this->fileModTime, 'filedate' => date("Y-m-d H:i:s", $this->fileModTime), 'datestamp' => date("Y-m-d H:i:s"), 'data' => $html));
     }
     else
     {

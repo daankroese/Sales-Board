@@ -32,7 +32,7 @@ function dataLoaded(data)
 
     // Show when the data was last updated
     $('#lastCheck').html(data.datestamp);
-    $('#lastChange').html(data.datestamp);
+    $('#lastChange').html(data.filedate);
   
     // Put data into container
     $('#progressTableContainer').html(data.data);
