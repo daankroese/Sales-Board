@@ -17,11 +17,11 @@ h1 {
 #progressTableContainer {
   height: 80%;
   margin: 1em;
-  border: 1px solid #21b4e2;
+  border: 1px solid #499bea;
 }
 
 table, tr, td {
-  border: 1px solid #21b4e2;
+  border: 1px solid #499bea;
   border-collapse: collapse;
   text-align: right;
 }
@@ -35,22 +35,21 @@ td {
 td.value {
   cursor: pointer;
 }
-.salesPersonName {
+.columnHeader {
   text-align: center;
 }
 .tableHeader,
 .tableTotals {
   font-size: 1.5em;
-  color: #000;
-
-  background: #b7deed; /* Old browsers */
-  background: -moz-linear-gradient(top,  #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b7deed), color-stop(50%,#71ceef), color-stop(51%,#21b4e2), color-stop(100%,#b7deed)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* IE10+ */
-  background: linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed',GradientType=0 ); /* IE6-9 */
+  color: #FFF;  
+  background: #499bea; /* Old browsers */
+  background: -moz-linear-gradient(top,  #499bea 0%, #207ce5 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#499bea), color-stop(100%,#207ce5)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* IE10+ */
+  background: linear-gradient(top,  #499bea 0%,#207ce5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 ); /* IE6-9 */
 }
 span.target, span.status {
   display: inline-block;
@@ -58,6 +57,6 @@ span.target, span.status {
 }
 
 input {
-  border: 2px solid #21b4e2;
+  border: 2px solid #499bea;
   text-align: right;
 }

@@ -33,6 +33,7 @@ class Data {
   var $csv_enclo = '"';
   var $data = array();
   var $totals = array();
+  var $grandTotals = array();
 
   /* Data
    * Main function
@@ -134,10 +135,10 @@ class Data {
              . "    <td>Sales Board</td>\n";
       for ($i = 0; $i < count($data); $i++)
       {
-        $html .= "    <td colspan=\"2\" class=\"salesPersonName\">" . $data[$i][0] . "</td>\n";
+        $html .= "    <td colspan=\"2\" class=\"columnHeader\">" . $data[$i][0] . "</td>\n";
       }
-      $html .= "  </tr>\n  <tr>\n    <td></td>\n";
-      for ($i = 0; $i < count($data); $i++)
+      $html .= "    <td colspan=\"2\" class=\"columnHeader\">Total</td>\n  </tr>\n  <tr>\n    <td></td>\n";
+      for ($i = 0; $i <= count($data); $i++)
       {
         $html .= "    <td>target</td><td>status</td>\n";
       }
@@ -151,7 +152,17 @@ class Data {
         for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
         {
           $data[$salesPerson][$i] = explode(';', $data[$salesPerson][$i]);
-          $html .= "    <td class=\"value target\" id=\"dataCell-$salesPerson-$i-target\">" . $data[$salesPerson][$i][0] . "</td><td class=\"value status\" id=\"dataCell-$salesPerson-$i-status\">" . $data[$salesPerson][$i][1] . "</td>\n";
+          $html .= "    <td class=\"value target\" id=\"dataCell-$salesPerson-$i-target\">" . $data[$salesPerson][$i][0] . "</td>\n"
+                 . "    <td class=\"value status\" id=\"dataCell-$salesPerson-$i-status\">" . $data[$salesPerson][$i][1] . "</td>\n";
+
+          // Add data to grand total
+          $grandTotals[$i][0] = (isset($grandTotals[$i][0])) ? $grandTotals[$i][0] + $data[$salesPerson][$i][0] : $data[$salesPerson][$i][0];
+          $grandTotals[$i][1] = (isset($grandTotals[$i][1])) ? $grandTotals[$i][1] + $data[$salesPerson][$i][1] : $data[$salesPerson][$i][1];
+          if ($i > 3)
+          {
+            $grandTotals['grandTotal'][0] = (isset($grandTotals['grandTotal'][0])) ? $grandTotals['grandTotal'][0] + $data[$salesPerson][$i][0] : $data[$salesPerson][$i][0];
+            $grandTotals['grandTotal'][1] = (isset($grandTotals['grandTotal'][1])) ? $grandTotals['grandTotal'][1] + $data[$salesPerson][$i][1] : $data[$salesPerson][$i][1];
+          }
 
           // Add sales to total for this sales person (only for 'Renewals', 'Services', and 'Tools')
           if ($i > 3)
@@ -160,6 +171,11 @@ class Data {
             $totals[$salesPerson][1] = (isset($totals[$salesPerson][1])) ? $totals[$salesPerson][1] + $data[$salesPerson][$i][1] : $data[$salesPerson][$i][1];
           }
         }
+
+        // Add cells to totals column
+        $html .= "    <td>" . $grandTotals[$i][0] . "</td>"
+               . "    <td>" . $grandTotals[$i][1] . "</td>";
+
         $html .= "  </tr>\n";
       }
 
@@ -170,7 +186,9 @@ class Data {
       {
         $html .= "    <td class=\"target\">" . $totals[$salesPerson][0] . "</td><td class=\"status\">" . $totals[$salesPerson][1] . "</td>\n";
       }
-      $html .= "  </tr>\n";
+      $html .= "    <td>" . $grandTotals['grandTotal'][0] . "</td>"
+             . "    <td>" . $grandTotals['grandTotal'][1] . "</td>"
+             . "  </tr>\n";
 
       // Return html
       $html .= "</table>\n";
