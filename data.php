@@ -85,6 +85,7 @@ class Data {
 
     // Truncate csv file
     ftruncate($filePointer, 0);
+    rewind($filePointer);
 
     // Set csv header row
     if (!fputcsv($filePointer, $header, $this->csv_delim, $this->csv_enclo))
