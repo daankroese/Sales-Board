@@ -49,6 +49,10 @@ function dataLoaded(data)
   {
     $('#errorBox').html(data.data);
   }
+  else
+  {
+    $('#errorBox').html('An unknown error occurred');
+  }
 }
 
 // Switch one cell to an input field
@@ -96,5 +100,13 @@ function dataSaved (data)
   if (data.status == 'success')
   {
     loadData();
+  }
+  else if (data.status == 'error')
+  {
+    $('#errorBox').html(data.data);
+  }
+  else
+  {
+    $('#errorBox').html('An unknown error occurred');
   }
 }
