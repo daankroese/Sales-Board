@@ -31,9 +31,6 @@ class Data {
   var $fileModTime = false;
   var $csv_delim = ',';
   var $csv_enclo = '"';
-  var $data = array();
-  var $totals = array();
-  var $grandTotals = array();
 
   /* Data
    * Main function
@@ -67,6 +64,7 @@ class Data {
     $header = fgetcsv($filePointer, 0, $this->csv_delim, $this->csv_enclo);
 
     // Get data for each salesperson
+    $data = array();
     while ($row = fgetcsv($filePointer, 0, $this->csv_delim, $this->csv_enclo))
     {
       $data[] = $row;
@@ -118,6 +116,8 @@ class Data {
    */
   function get()
   {
+    $totals = array();
+    $grandTotals = array();
     $html = "<table>\n";
 
     // Open file pointer
@@ -128,6 +128,12 @@ class Data {
       $csv = $this->getData($fp);
       $header = $csv['header'];
       $data = $csv['data'];
+
+      // Return error if data is missing
+      if (empty($data))
+      {
+        return json_encode(array('status' => 'error', 'data' => 'No data found in ' . $this->filename));
+      }
 
       // Create table from data
       // Create header

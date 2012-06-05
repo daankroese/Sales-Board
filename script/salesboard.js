@@ -19,6 +19,9 @@ function loadData(first)
 // Handle the new data (if any) on a successful load
 function dataLoaded(data)
 {
+  // Clear error box if needed
+  $('#errorBox').html('&nbsp;');
+
   // Parse JSON (if needed)
   data = ($.parseJSON(data)) ? $.parseJSON(data) : data;
 
@@ -40,7 +43,7 @@ function dataLoaded(data)
   }
   else if (data.status == 'error')
   {
-  
+    $('#errorBox').html(data.data);
   }
 }
 

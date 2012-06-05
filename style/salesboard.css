@@ -14,6 +14,14 @@ h1 {
   font-size: 2em;
 }
 
+#errorBox {
+  margin: 0px 0px 0px 20px;
+  padding: 0px;
+  vertical-align: top;
+  line-height: inherit;
+  color: #FF0000;
+}
+
 #progressTableContainer {
   height: 80%;
   margin: 1em;
