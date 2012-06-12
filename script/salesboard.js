@@ -112,7 +112,8 @@ function saveData(event)
     }
 
     // Update view back to normal
-    input.parent().html(value.toMoney());
+    value = (input.parent().hasClass('money')) ? value.toMoney() : value;
+    input.parent().html(value);
   }
 }
 
