@@ -154,10 +154,11 @@ class Data {
       // Create row for each sales type
       for ($i = 1; $i < count($header); $i++)
       {
-        $cellClass = ($i > 3) ? 'summable' : 'nonSummable';
+        $rowClass  = ($i > 3) ? 'summable' : 'nonSummable';
+        $cellClass = ($i > 3) ? 'money' : 'nonMoney';
 
-        $html .= "  <tr>\n"
-               . "    <td class=\"$cellClass\">" . $header[$i] . "</td>\n";
+        $html .= "  <tr class=\"$rowClass\">\n"
+               . "    <td>" . $header[$i] . "</td>\n";
         for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
         {
           $data[$salesPerson][$i] = explode(';', $data[$salesPerson][$i]);
@@ -193,10 +194,10 @@ class Data {
              . "    <td>Total sales</td>\n";
       for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
       {
-        $html .= "    <td class=\"target\">" . $totals[$salesPerson][0] . "</td><td class=\"status emphasis\">" . $totals[$salesPerson][1] . "</td>\n";
+        $html .= "    <td class=\"target $cellClass\">" . $totals[$salesPerson][0] . "</td><td class=\"status emphasis $cellClass\">" . $totals[$salesPerson][1] . "</td>\n";
       }
-      $html .= "    <td>" . $grandTotals['grandTotal'][0] . "</td>"
-             . "    <td class=\"emphasis\">" . $grandTotals['grandTotal'][1] . "</td>"
+      $html .= "    <td class=\"$cellClass\">" . $grandTotals['grandTotal'][0] . "</td>"
+             . "    <td class=\"emphasis $cellClass\">" . $grandTotals['grandTotal'][1] . "</td>"
              . "  </tr>\n";
 
       // Return html

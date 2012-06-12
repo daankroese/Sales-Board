@@ -20,9 +20,6 @@ function loadData(first)
 // Handle the new data (if any) on a successful load
 function dataLoaded(data)
 {
-  // Clear error box if needed
-  //$('#errorBox').html('&nbsp;');
-
   // Parse JSON (if needed)
   data = ($.parseJSON(data)) ? $.parseJSON(data) : data;
 
@@ -37,10 +34,19 @@ function dataLoaded(data)
   
     // Put data into container
     $('#progressTableContainer').html(data.data);
+
+    // Format the cells with money data accordingly
+    var moneyCells = $('#progressTableContainer').find('td.money');
+    $.each(moneyCells, function(index, cell) {
+      cell = $(cell);
+      cell.html(cell.html().toInt().toMoney());
+    });
   
     // Make table cells turn into input fields on click
-    var cells = $('#progressTableContainer').find('td.value');
-    cells.on('click', switchCellToInput);
+    var editableCells = $('#progressTableContainer').find('td.value');
+    editableCells.on('click', switchCellToInput);
+
+    message('success', 'New data loaded');
   }
   else if (data.status == 'unchanged')
   {
@@ -64,7 +70,7 @@ function switchCellToInput(event)
   if (cell.find('input').length == 0)
   {
     // Get current cel value and turn it into an input field
-    oldCellValue = parseInt(cell.html(), 10);
+    oldCellValue = cell.html().toInt();
     var width = cell.width();
     cell.html('<input type="text" value="' + oldCellValue + '" />');
     var input = cell.find('input');
@@ -86,22 +92,27 @@ function saveData(event)
     // Get new data from cell
     //console.log(this, event);
     var input = $(this);
-    var value = parseInt(input.val(), 10);
+    var value = input.val().toInt();
 
     // If data is valid number AND not the number it was before, send it to the data handler
-    if (!isNaN(value) && value != oldCellValue)
-    {
-      var id = input.parent().attr('id').split('-');
-      $.post('data.php', {"action":"set", "data":{"id":id, "value":value}}, dataSaved);
-    }
-    else
+    if (isNaN(value))
     {
       value = oldCellValue;
       message('error', 'Invalid input');
     }
+    else if (value == oldCellValue)
+    {
+      value = oldCellValue;
+      message('error', 'Field value unchanged');
+    }
+    else
+    {
+      var id = input.parent().attr('id').split('-');
+      $.post('data.php', {"action":"set", "data":{"id":id, "value":value}}, dataSaved);
+    }
 
     // Update view back to normal
-    input.parent().html(value);
+    input.parent().html(value.toMoney());
   }
 }
 
@@ -153,4 +164,34 @@ function message(type, message)
   {
     message('error', 'Invalid message type');
   }
+}
+
+/**
+ * Number Formatting Magic™
+ *
+ * Format a number as money
+ * source: http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
+ */
+Number.prototype.toMoney = function(decimals, decimal_sep, thousands_sep)
+{ 
+   var n = this,
+   c = isNaN(decimals) ? 2 : Math.abs(decimals),
+   d = decimal_sep || ',',
+   // If you don't want to use a thousands separator you can pass an empty string for thousands_sep
+   t = (typeof thousands_sep === 'undefined') ? '.' : thousands_sep,
+   sign = (n < 0) ? '-' : '',
+   // Extract the absolute value of the integer part of the number and convert to string
+   i = parseInt(n = Math.abs(n).toFixed(c)) + '',
+   j = ((j = i.length) > 3) ? j % 3 : 0;
+   return sign + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+}
+/**
+ * Strip all non-numeric characters from string and return integer value
+ */
+String.prototype.toInt = function(decimal_sep)
+{
+  var s = this + '';
+  if (['.',','].indexOf(decimal_sep) == -1) decimal_sep = ',';
+  var regex = (decimal_sep == ',') ? /[^0-9,]/g : /[^0-9\.]/g;
+  return parseInt(s.replace(regex, ''), 10);
 }

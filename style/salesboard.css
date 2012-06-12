@@ -78,7 +78,7 @@ td.value:hover {
 .tableSubHeader {
   border-bottom: 3px double #499bea;
 }
-td.summable {
+tr.summable {
   background-color: #89DBFF;
 }
 td.emphasis {
