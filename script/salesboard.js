@@ -127,7 +127,7 @@ function dataSaved (data)
   }
   else if (data.status == 'error')
   {
-    message('errors', data.data);
+    message('error', data.data);
   }
   else
   {
@@ -163,7 +163,7 @@ function message(type, message)
   }
   else
   {
-    message('error', 'Invalid message type');
+    this.message('error', 'Invalid message type');
   }
 }
 
