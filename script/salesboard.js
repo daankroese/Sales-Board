@@ -191,8 +191,6 @@ Number.prototype.toMoney = function(decimals, decimal_sep, thousands_sep)
  */
 String.prototype.toInt = function(decimal_sep)
 {
-  var s = this + '';
-  if (['.',','].indexOf(decimal_sep) == -1) decimal_sep = ',';
-  var regex = (decimal_sep == ',') ? /[^0-9,]/g : /[^0-9\.]/g;
-  return parseInt(s.replace(regex, ''), 10);
+  var regex = (typeof decimal_sep == 'undefined' || decimal_sep == ',') ? /[^0-9,]/g : /[^0-9\.]/g;
+  return parseInt(this.replace(regex, ''), 10);
 }
