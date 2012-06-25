@@ -1,4 +1,4 @@
-#Outpost 24 Sales Board/Sceen
+# Sales Board/Sceen
 A very simple web app to show sales results and make them editable for anyone with access to the interface (in other words: there is no access control built into the app).
 
 ##Features
