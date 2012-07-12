@@ -23,6 +23,8 @@ switch ($action)
   case 'set':
     echo $handler->set($data);
     break;
+  default:
+    echo json_encode(array('status' => 'error', 'data' => 'Unsupported request'));
 }
 
 class Data {
