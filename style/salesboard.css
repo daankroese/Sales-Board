@@ -94,10 +94,10 @@ input {
 /* Footer with datestamps for last check and change */
 #lastUpdate {
   float: right;
-  margin: 5px 2em;
+  margin: 5px 1.7em;
   padding: 0px;
-  font-size: .5em;
+  font-size: .6em;
 }
 #lastUpdate span {
-  font-size: 10px;
+  font-size: 1em;
 }
