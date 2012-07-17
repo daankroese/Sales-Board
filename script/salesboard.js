@@ -176,7 +176,7 @@ function message(type, message)
 Number.prototype.toMoney = function(decimals, decimal_sep, thousands_sep)
 { 
    var n = this,
-   c = isNaN(decimals) ? 2 : Math.abs(decimals),
+   c = isNaN(decimals) ? 0 : Math.abs(decimals),
    d = decimal_sep || ',',
    // If you don't want to use a thousands separator you can pass an empty string for thousands_sep
    t = (typeof thousands_sep === 'undefined') ? '.' : thousands_sep,
