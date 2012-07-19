@@ -141,15 +141,15 @@ class Data {
       // Create table from data
       // Create header
       $html .= "  <tr class=\"tableHeader\">\n"
-             . "    <td>Sales Board</td>\n";
+             . "    <td class=\"separateRight\">Sales Board</td>\n";
       for ($i = 0; $i < count($data); $i++)
       {
-        $html .= "    <td colspan=\"2\" class=\"columnHeader\">" . $data[$i][0] . "</td>\n";
+        $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft separateRight\">" . $data[$i][0] . "</td>\n";
       }
-      $html .= "    <td colspan=\"2\" class=\"columnHeader\">Total</td>\n  </tr>\n  <tr class=\"tableSubHeader\">\n    <td></td>\n";
+      $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft\">Total</td>\n  </tr>\n  <tr class=\"tableSubHeader\">\n    <td class=\"separateRight\"></td>\n";
       for ($i = 0; $i <= count($data); $i++)
       {
-        $html .= "    <td>target</td><td>status</td>\n";
+        $html .= "    <td class=\"separateLeft\">target</td><td class=\"separateRight\">status</td>\n";
       }
       $html .= "  </tr>\n";
   
@@ -160,12 +160,12 @@ class Data {
         $cellClass = ($i > 3) ? 'money' : 'nonMoney';
 
         $html .= "  <tr class=\"$rowClass\">\n"
-               . "    <td>" . $header[$i] . "</td>\n";
+               . "    <td class=\"separateRight\">" . $header[$i] . "</td>\n";
         for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
         {
           $data[$salesPerson][$i] = explode(';', $data[$salesPerson][$i]);
-          $html .= "    <td class=\"value target $cellClass\" id=\"dataCell-$salesPerson-$i-target\">" . $data[$salesPerson][$i][0] . "</td>\n"
-                 . "    <td class=\"value status $cellClass\" id=\"dataCell-$salesPerson-$i-status\">" . $data[$salesPerson][$i][1] . "</td>\n";
+          $html .= "    <td class=\"value target separateLeft $cellClass\" id=\"dataCell-$salesPerson-$i-target\">" . $data[$salesPerson][$i][0] . "</td>\n"
+                 . "    <td class=\"value status separateRight $cellClass\" id=\"dataCell-$salesPerson-$i-status\">" . $data[$salesPerson][$i][1] . "</td>\n";
 
           // Add data to grand total
           $grandTotals[$i][0] = (isset($grandTotals[$i][0])) ? $grandTotals[$i][0] + $data[$salesPerson][$i][0] : $data[$salesPerson][$i][0];
@@ -185,7 +185,7 @@ class Data {
         }
 
         // Add cells to totals column
-        $html .= "    <td class=\"$cellClass\">" . $grandTotals[$i][0] . "</td>"
+        $html .= "    <td class=\"$cellClass separateLeft\">" . $grandTotals[$i][0] . "</td>"
                . "    <td class=\"$cellClass emphasis\">" . $grandTotals[$i][1] . "</td>";
 
         $html .= "  </tr>\n";
@@ -193,13 +193,13 @@ class Data {
 
       // Create a row with totals
       $html .="  <tr class=\"tableTotals\">\n"
-             . "    <td>Total sales</td>\n";
+             . "    <td class=\"separateRight\">Total sales</td>\n";
       for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
       {
-        $html .= "    <td class=\"target $cellClass\">" . $totals[$salesPerson][0] . "</td><td class=\"status emphasis $cellClass\">" . $totals[$salesPerson][1] . "</td>\n";
+        $html .= "    <td class=\"target separateLeft $cellClass\">" . $totals[$salesPerson][0] . "</td><td class=\"status emphasis separateRight $cellClass\">" . $totals[$salesPerson][1] . "</td>\n";
       }
-      $html .= "    <td class=\"$cellClass\">" . $grandTotals['grandTotal'][0] . "</td>"
-             . "    <td class=\"emphasis $cellClass\">" . $grandTotals['grandTotal'][1] . "</td>"
+      $html .= "    <td class=\"$cellClass separateLeft\">" . $grandTotals['grandTotal'][0] . "</td>"
+             . "    <td class=\"$cellClass emphasis\">" . $grandTotals['grandTotal'][1] . "</td>"
              . "  </tr>\n";
 
       // Return html
