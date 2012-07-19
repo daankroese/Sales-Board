@@ -152,7 +152,7 @@ class Data {
         $html .= "    <td class=\"separateLeft\">target</td><td class=\"separateRight\">status</td>\n";
       }
       $html .= "  </tr>\n";
-  
+
       // Create row for each sales type
       for ($i = 1; $i < count($header); $i++)
       {
@@ -222,7 +222,7 @@ class Data {
     if ($fp)
     {
       // Get csv data
-      $csv = $this->getData($fp); 
+      $csv = $this->getData($fp);
 
       // Update the csv data with the new value
       $salesPerson = intval($data['id'][1]);
