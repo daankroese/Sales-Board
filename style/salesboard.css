@@ -82,7 +82,7 @@ td.value:hover {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 ); /* IE6-9 */
 }
 .tableSubHeader {
-  border-bottom: 3px double #499bea;
+  border-bottom: 3px solid #000;
 }
 tr.summable {
   background-color: #89DBFF;
@@ -92,7 +92,7 @@ td.emphasis {
   font-weight: bold;
 }
 td.separateRight + td.separateLeft {
-  border-left: 3px double #000;
+  border-left: 3px solid #000;
 }
 
 input {

@@ -141,7 +141,7 @@ class Data {
       // Create table from data
       // Create header
       $html .= "  <tr class=\"tableHeader\">\n"
-             . "    <td class=\"separateRight\">Sales Board</td>\n";
+             . "    <td class=\"separateRight\">Sales Screen</td>\n";
       for ($i = 0; $i < count($data); $i++)
       {
         $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft separateRight\">" . $data[$i][0] . "</td>\n";
