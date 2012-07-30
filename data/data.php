@@ -29,7 +29,7 @@ switch ($action)
 
 class Data {
   /* Initialize variables */
-  var $filename = 'data/data.csv';
+  var $filename = 'data.csv';
   var $fileModTime = false;
   var $csv_delim = ',';
   var $csv_enclo = '"';

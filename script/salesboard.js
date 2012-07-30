@@ -2,6 +2,7 @@
 var updateTimer;
 var lastDataTimestamp = 0;
 var oldCellValue;
+var dataHandler = 'data/data.php';
 
 $(document).ready(function (){
   // Load data table when page loads
@@ -14,7 +15,7 @@ $(document).ready(function (){
 function loadData(first)
 {
   var timestamp = (first === true) ? 0 : lastDataTimestamp;
-  $.post('data.php', {"action":"get", "timestamp":timestamp}, dataLoaded);
+  $.post(dataHandler, {"action":"get", "timestamp":timestamp}, dataLoaded);
 }
 
 // Handle the new data (if any) on a successful load
@@ -108,7 +109,7 @@ function saveData(event)
     else
     {
       var id = input.parent().attr('id').split('-');
-      $.post('data.php', {"action":"set", "data":{"id":id, "value":value}}, dataSaved);
+      $.post(dataHandler, {"action":"set", "data":{"id":id, "value":value}}, dataSaved);
     }
 
     // Update view back to normal
