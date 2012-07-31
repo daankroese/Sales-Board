@@ -141,10 +141,10 @@ class Data {
       // Create table from data
       // Create header
       $html .= "  <tr class=\"tableHeader\">\n"
-             . "    <td class=\"separateRight\">Sales Screen</td>\n";
+             . "    <td class=\"separateRight\"></td>\n";
       for ($i = 0; $i < count($data); $i++)
       {
-        $html .= "    <td colspan=\"2\" class=\"columnHeader emphasis separateLeft separateRight\">" . $data[$i][0] . "</td>\n";
+        $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft separateRight\">" . $data[$i][0] . "</td>\n";
       }
       $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft\">Total</td>\n  </tr>\n  <tr class=\"tableSubHeader\">\n    <td class=\"separateRight\"></td>\n";
       for ($i = 0; $i <= count($data); $i++)
@@ -160,7 +160,7 @@ class Data {
         $cellClass = ($i > 3) ? 'money' : 'nonMoney';
 
         $html .= "  <tr class=\"$rowClass\">\n"
-               . "    <td class=\"separateRight\">" . $header[$i] . "</td>\n";
+               . "    <td class=\"emphasis separateRight\">" . $header[$i] . "</td>\n";
         for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
         {
           $data[$salesPerson][$i] = explode(';', $data[$salesPerson][$i]);
@@ -193,7 +193,7 @@ class Data {
 
       // Create a row with totals
       $html .="  <tr class=\"tableTotals\">\n"
-             . "    <td class=\"separateRight\">Total sales</td>\n";
+             . "    <td class=\"emphasis separateRight\">Total sales</td>\n";
       for ($salesPerson = 0; $salesPerson < count($data); $salesPerson++)
       {
         $html .= "    <td class=\"target separateLeft $cellClass\">" . $totals[$salesPerson][0] . "</td><td class=\"status emphasis separateRight $cellClass\">" . $totals[$salesPerson][1] . "</td>\n";
