@@ -13,7 +13,7 @@ $(document).ready(function (){
   updateTimer = setInterval("loadData()", 2000);
 
   // Set base font size (used for automatic scaling) and scaling on window resize
-  baseFontSize = $('body').css('font-size');
+  baseFontSize = parseInt($('body').css('font-size'), 10);
   $(window).bind('resize', scaleToFit);
 });
 
@@ -76,10 +76,10 @@ function dataLoaded(data)
 function scaleToFit()
 {
   // Reset to default base font size
-  $('body').css('font-size', baseFontSize);
+  $('body').css('font-size', baseFontSize + 'px');
+  var currentFontSize = baseFontSize;
 
   // Reduce base font size until content fits in browser window
-  var currentFontSize = parseInt($('body').css('font-size'), 10);
   while (   $(document).width()     > $(window).width()
          || $(document).height()    > $(window).height()
          || $('#dataTable').width() > $('#dataTableContainer').width()
@@ -90,7 +90,7 @@ function scaleToFit()
     // Safety to prevent infinite loop
     if (currentFontSize <= 1)
     {
-      $('body').css('font-size', baseFontSize);
+      $('body').css('font-size', baseFontSize + 'px');
       message('error', 'Content could not be scaled to fit inside window');
       break;
     }
