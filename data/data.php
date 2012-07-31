@@ -121,7 +121,7 @@ class Data {
   {
     $totals = array();
     $grandTotals = array();
-    $html = "<table>\n";
+    $html = "<table id=\"dataTable\">\n";
 
     // Open file pointer
     $fp = fopen($this->filename, "r");

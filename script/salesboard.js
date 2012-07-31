@@ -3,12 +3,18 @@ var updateTimer;
 var lastDataTimestamp = 0;
 var oldCellValue;
 var dataHandler = 'data/data.php';
+var baseFontSize;
 
 $(document).ready(function (){
   // Load data table when page loads
   loadData(true);
+
   // Set periodical updating
   updateTimer = setInterval("loadData()", 2000);
+
+  // Set base font size (used for automatic scaling) and scaling on window resize
+  baseFontSize = $('body').css('font-size');
+  $(window).bind('resize', scaleToFit);
 });
 
 // Load data into container (if there is new data)
@@ -32,20 +38,23 @@ function dataLoaded(data)
     // Show when the data was last updated
     $('#lastCheck').html(data.datestamp);
     $('#lastChange').html(data.filedate);
-  
+
     // Put data into container
-    $('#progressTableContainer').html(data.data);
+    $('#dataTableContainer').html(data.data);
 
     // Format the cells with money data accordingly
-    var moneyCells = $('#progressTableContainer').find('td.money');
+    var moneyCells = $('#dataTableContainer').find('td.money');
     $.each(moneyCells, function(index, cell) {
       cell = $(cell);
       cell.html(cell.html().toInt().toMoney());
     });
-  
+
     // Make table cells turn into input fields on click
-    var editableCells = $('#progressTableContainer').find('td.value');
+    var editableCells = $('#dataTableContainer').find('td.value');
     editableCells.on('click', switchCellToInput);
+
+    // Scale new data to fit in browser window
+    scaleToFit();
 
     message('success', 'New data loaded');
   }
@@ -60,6 +69,31 @@ function dataLoaded(data)
   else
   {
     message('error', 'An unknown error occurred');
+  }
+}
+
+// Scale the data to prevent scrolling
+function scaleToFit()
+{
+  // Reset to default base font size
+  $('body').css('font-size', baseFontSize);
+
+  // Reduce base font size until content fits in browser window
+  var currentFontSize = parseInt($('body').css('font-size'), 10);
+  while (   $(document).width()     > $(window).width()
+         || $(document).height()    > $(window).height()
+         || $('#dataTable').width() > $('#dataTableContainer').width()
+        )
+  {
+    $('body').css('font-size', --currentFontSize + 'px');
+
+    // Safety to prevent infinite loop
+    if (currentFontSize <= 1)
+    {
+      $('body').css('font-size', baseFontSize);
+      message('error', 'Content could not be scaled to fit inside window');
+      break;
+    }
   }
 }
 

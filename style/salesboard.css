@@ -2,7 +2,6 @@
 * {
   margin: 0px;
   padding: 0px;
-  font-size: 20px;
   line-height: 1em;
   font-family: "Calibri", sans-serif;
 }
@@ -10,6 +9,7 @@ html, body {
   height: 100%;
   margin: 0px;
   padding: 0px;
+  font-size: 20px;
 }
 
 h1 {
@@ -32,12 +32,13 @@ h1 {
   vertical-align: middle;
   line-height: inherit;
   color: #FF0000;
+  font-size: .5em;
 }
 #successBox {
   color: #00E000;
 }
 
-#progressTableContainer {
+#dataTableContainer {
   height: 80%;
   margin: 1em 1em 0 1em;
   border: 1px solid #499bea;
@@ -69,7 +70,7 @@ td.value:hover {
 }
 .tableHeader,
 .tableTotals {
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: bold;
   color: #FFF;  
   background: #499bea; /* Old browsers */
@@ -88,7 +89,7 @@ tr.summable {
   background-color: #89DBFF;
 }
 td.emphasis {
-  font-size: 1.1em;
+  font-size: 1.5em;
   font-weight: bold;
 }
 td.separateRight + td.separateLeft {
