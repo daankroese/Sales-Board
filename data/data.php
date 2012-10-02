@@ -146,7 +146,7 @@ class Data {
       {
         $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft separateRight\">" . $data[$i][0] . "</td>\n";
       }
-      $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft\">Total</td>\n  </tr>\n  <tr class=\"tableSubHeader\">\n    <td class=\"separateRight\"></td>\n";
+      $html .= "    <td colspan=\"2\" class=\"columnHeader separateLeft\">Total</td>\n  </tr>\n  <tr class=\"tableSubHeader\">\n    <td class=\"separateRight\">" . date("F Y") . "</td>\n";
       for ($i = 0; $i <= count($data); $i++)
       {
         $html .= "    <td class=\"separateLeft\">target</td><td class=\"separateRight\">status</td>\n";
