@@ -3,13 +3,14 @@
   margin: 0px;
   padding: 0px;
   line-height: 1em;
-  font-family: "Calibri", sans-serif;
+  font-family: "Helvetica Neue", "Helvetica", "Calibri", sans-serif;
 }
 html, body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  font-size: 20px;
+  font-size: 16px;
+  color: #003142;
 }
 
 h1 {
@@ -41,18 +42,18 @@ h1 {
 #dataTableContainer {
   height: 80%;
   margin: 1em 1em 0 1em;
-  border: 1px solid #499bea;
 }
 
 /* Table styling rules */
 table, tr, td {
-  border: 1px solid #499bea;
+  border: 1px solid #00546B;
   border-collapse: collapse;
   text-align: right;
 }
 table {
   width: 100%;
   height: 100%;
+  border-width: 3px;
 }
 td {
   padding: 10px;
@@ -74,20 +75,13 @@ td.value:hover {
   font-size: 1em;
   font-weight: bold;
   color: #FFF;  
-  background: #499bea; /* Old browsers */
-  background: -moz-linear-gradient(top,  #499bea 0%, #207ce5 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#499bea), color-stop(100%,#207ce5)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #499bea 0%,#207ce5 100%); /* IE10+ */
-  background: linear-gradient(top,  #499bea 0%,#207ce5 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 ); /* IE6-9 */
+  background: #00546B;
 }
 .tableSubHeader {
   border-bottom: 3px solid #000;
 }
 tr.summable {
-  background-color: #89DBFF;
+  background-color: #51BFE2;
 }
 td.emphasis {
   font-size: 1.5em;
