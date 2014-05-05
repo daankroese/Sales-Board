@@ -76,8 +76,8 @@ class Data {
   }
 
   /* setData
-   * Function for getting all the data from the
-   * csv-file into an array.
+   * Function for storing all the data from the
+   * sales board into the csv-file.
    */
   function setData($filePointer, $header, $data)
   {
